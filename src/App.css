@@ -6,6 +6,12 @@ body {
   background-color: #dadce2;
 }
 
+.app {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px;
+}
+
 .app_header {
   display: flex;
   align-items: center;
@@ -13,7 +19,24 @@ body {
   justify-content: space-between;
 }
 
+.app__left {
+  flex: 0.60;
+}
+
 .app__status{
   display: flex;
   justify-content: space-between;
+}
+
+@media (max-width: 990px) {
+  .app {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 400px) {
+  .infoBox, .app__status {
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
 }
