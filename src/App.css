@@ -28,6 +28,10 @@ body {
   justify-content: space-between;
 }
 
+.infoBox {
+  padding-left: 10px;
+}
+
 @media (max-width: 990px) {
   .app {
     flex-direction: column;
