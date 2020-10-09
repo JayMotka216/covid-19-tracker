@@ -4,7 +4,7 @@ import InfoBox from './component/InfoBox';
 import Map from './component/Map';
 import Table from './component/Table';
 import LineGraph from './component/LineGraph';
-import { sortData } from './utils';
+import { sortData, preetyPrintStat } from './utils';
 import './App.css';
 import 'leaflet/dist/leaflet.css';
 
@@ -18,6 +18,7 @@ function App() {
     const [tableData, setTableData] = useState([]);
     const [mapCenter, setMapCenter] = useState({ lat: 26.3351, lng:17.2283});
     const [mapZoom, setMapZoom] = useState(2);
+    const [mapCountries, setMapCountries] = useState([]);
 
     useEffect(() => {
         fetch('https://disease.sh/v3/covid-19/all')
@@ -42,6 +43,7 @@ function App() {
                     const sortedData = sortData(data);
                     setTableData(sortedData);
                     setCountries(countries);
+                    setMapCountries(data);
               })
           }
 
@@ -85,12 +87,12 @@ function App() {
                 </div>
 
                 <div className="app__status">
-                    <InfoBox title='Coronavirus Cases' total={countryInfo.cases} cases={countryInfo.todayCases} />
-                    <InfoBox title='Recoverd' total={countryInfo.recovered} cases={countryInfo.todayRecovered} />
-                    <InfoBox title='Deaths' total={countryInfo.deaths} cases={countryInfo.todayDeaths} />
+                    <InfoBox title='Coronavirus Cases' total={preetyPrintStat(countryInfo.cases)} cases={preetyPrintStat(countryInfo.todayCases)} />
+                    <InfoBox title='Recoverd' total={preetyPrintStat(countryInfo.recovered)} cases={preetyPrintStat(countryInfo.todayRecovered)} />
+                    <InfoBox title='Deaths' total={preetyPrintStat(countryInfo.deaths)} cases={preetyPrintStat(countryInfo.todayDeaths)} />
                 </div>
 
-                <Map center={mapCenter} zoom={mapZoom} />
+                <Map countries={mapCountries} casesType="cases" center={mapCenter} zoom={mapZoom} />
             </div>
                 
             <div className="app__right">
