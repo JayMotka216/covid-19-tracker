@@ -63,9 +63,8 @@ function App() {
         .then(data => {
             setCountry(countryCode);
             setCountryInfo(data);
-            console.log(data.countryInfo)
-            setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-            setMapZoom(4);
+            countryCode ==='worldwide' ? setMapCenter([26.3351, 17.2283]) : setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+            countryCode ==='worldwide' ? setMapZoom(2) : setMapZoom(4);
         })
     }
 
@@ -73,19 +72,19 @@ function App() {
         <div className="app">
             <div className="app__left">
                 <div className="app_header">
-                    <h1>Covid - 19 Tracker</h1>
+                    <h1 className="app__title">Covid - 19 Tracker</h1>
                     
                     <FormControl className="app__dropdown">
                         <Select variant="outlined" value={country} onChange={onCountryChange}>
-                            <MenuItem value="worldwide" >WorldWide</MenuItem>
+                            <MenuItem value="worldwide" key="worldwide" >WorldWide</MenuItem>
                             {
                               countries.map((country) => {
-                                return <MenuItem value={country.value} >{country.name}</MenuItem>
+                                return <MenuItem value={country.value} key={country.iso2} >{country.name}</MenuItem>
                               })
                             }
                         </Select>
                     </FormControl>
-                </div>
+                </div><hr/>
 
                 <div className="app__status">
                     <InfoBox title='Cases' onClick={(e) => setCasesType('cases')} active={casesType === 'cases'} type="1"
@@ -105,7 +104,7 @@ function App() {
                       <h3>Live Cases By Country</h3><hr/>
                       <Table countries={tableData} />
                       <div>
-                        <h3 className="app__h">Worldwide new Cases</h3><hr/>
+                        <h3 className="app__h">Worldwide {casesType.toLocaleUpperCase()} {casesType !== 'cases' ? 'cases' : ''}</h3><hr/>
                         <LineGraph className="app__graph" casesType={casesType} />
                       </div>
                     </CardContent>

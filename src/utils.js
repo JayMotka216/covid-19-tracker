@@ -28,7 +28,7 @@ export const showDataOnMap = (data, casesType) => {
     return data.map(country => (
         <Circle center={[country.countryInfo.lat, country.countryInfo.long]} 
         fillOpacity={0.4} fillColor={casesTypeColor[casesType].hex} color={casesTypeColor[casesType].hex} 
-        radius={Math.sqrt(country[casesType])*casesTypeColor[casesType].multiplier/1.5} >
+        radius={country[casesType] === 0 ? 0 : Math.sqrt(country[casesType])*casesTypeColor[casesType].multiplier/1.5} >
             <Popup>
                 <div className="info-container">
                     <div className="info-flag" style={{backgroundImage: `url(${country.countryInfo.flag})`}} />
